@@ -81,13 +81,53 @@ def depthFirstSearch(problem):
     print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
-    "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    print("Start:", problem.getStartState())
+    print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
+    print("Start's successors:", problem.getSuccessors(problem.getStartState()))
+
+    visited = set()  # Set to keep track of visited states
+    stack = util.Stack()  # Stack to store the states to be explored
+    stack.push((problem.getStartState(), []))  # Push the start state and an empty list of actions
+
+    while not stack.isEmpty():
+        state, actions = stack.pop()
+
+        if problem.isGoalState(state):
+            print("Goal state found", state, actions)
+            return actions
+
+        if state not in visited:
+            visited.add(state)
+            successors = problem.getSuccessors(state)
+            print("Successors:", successors)
+            for successor, action, _ in successors:
+                stack.push((successor, actions + [action]))
+
+    return []  # Return an empty list if no solution is found
+    
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
-    "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    
+    visited = set()  # Set to keep track of visited states
+    stack = util.Queue()  # FIFO Queue to store the states to be explored
+    stack.push((problem.getStartState(), []))  # Push the start state and an empty list of actions
+
+    while not stack.isEmpty():
+        state, actions = stack.pop()
+
+        if problem.isGoalState(state):
+            print("Goal state found", state, actions)
+            return actions
+
+        if state not in visited:
+            visited.add(state)
+            successors = problem.getSuccessors(state)
+            print("Successors:", successors)
+            for successor, action, _ in successors:
+                stack.push((successor, actions + [action]))
+
+    return []  # Return an empty list if no solution is found
 
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
