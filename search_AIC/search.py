@@ -115,7 +115,6 @@ def breadthFirstSearch(problem):
 
     while not frontier.isEmpty():
         state, actions = frontier.pop()
-        print("State:", state, "Actions:", actions)
 
         if problem.isGoalState(state):
             print("Goal state found", state, actions)
