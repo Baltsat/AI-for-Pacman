@@ -25,14 +25,17 @@ python3 pacman_AIC.py --layout testMaze --pacman GoWestAgent
 ```
 
 You should have in the terminal:
-Pacman emerges victorious! Score: 503
-Average Score: 503.0
-Scores:        503.0
-Win Rate:      1/1 (1.00)
-Record:        Win
+
+| Pacman emerges victorious! | Score: 503     |
+|---------------------------|----------------|
+| Average Score             | 503.0          |
+| Scores                    | 503.0          |
+| Win Rate                  | 1/1 (1.00)     |
+| Record                    | Win            |
 
 
-![Init program](imgs/Init program.png)
+
+![Init program](imgs/Init_program.png)
 
 
 
