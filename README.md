@@ -92,6 +92,9 @@ python3 pacman_AIC.py -l mediumMaze -p SearchAgent -a fn=bfs
 ```bash
 python3 pacman_AIC.py -l bigMaze -p SearchAgent -a fn=bfs -z .5
 ```
+```bash
+python3 pacman_AIC.py -l mediumScaryMaze -p SearchAgent -a fn=bfs -z .5
+```
 
 
 ## Uniform Cost Search (UCS)
@@ -101,6 +104,31 @@ We implement DFS algorithm in the *breadthFirstSearch* function in *search.py*. 
 - Expands the node with lowest path cost g(n).
 - Goal test is applied to a node when it is selected for expansion rather than when it is first generate, the first goal node that is generated may be on a suboptimal path.
 - A test is added in case a better path is found to a node currently on the frontier.
+
+We test our code using:
+```bash
+python3 pacman_AIC.py -l mediumMaze -p SearchAgent -a fn=ucs
+```
+```bash
+python3 pacman_AIC.py -l mediumDottedMaze -p StayEastSearchAgent
+```
+```bash
+python3 pacman_AIC.py -l mediumScaryMaze -p StayWestSearchAgent
+```
+
+## Finding All the Corners Problem
+
+In corner mazes, there are four dots, one in each corner. Our new search problem is to find the shortest path through the maze that touches all four corners (whether the maze actually has food there or not).
+
+
+
+We test our code using:
+```bash
+python3 pacman_AIC.py -l tinyCorners -p SearchAgent -a fn=bfs,prob=CornersProblem
+```
+```bash
+python3 pacman_AIC.py -l mediumCorners -p SearchAgent -a fn=bfs,prob=CornersProblem
+```
 
 
 

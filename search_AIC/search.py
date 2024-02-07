@@ -86,11 +86,11 @@ def depthFirstSearch(problem):
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
 
     visited = set()  # Set to keep track of visited states
-    stack = util.Stack()  # Stack to store the states to be explored
-    stack.push((problem.getStartState(), []))  # Push the start state and an empty list of actions
+    frontier = util.Stack()  # Stack to store the states to be explored
+    frontier.push((problem.getStartState(), []))  # Push the start state and an empty list of actions
 
-    while not stack.isEmpty():
-        state, actions = stack.pop()
+    while not frontier.isEmpty():
+        state, actions = frontier.pop()
 
         if problem.isGoalState(state):
             print("Goal state found", state, actions)
@@ -101,7 +101,7 @@ def depthFirstSearch(problem):
             successors = problem.getSuccessors(state)
             print("Successors:", successors)
             for successor, action, _ in successors:
-                stack.push((successor, actions + [action]))
+                frontier.push((successor, actions + [action]))
 
     return []  # Return an empty list if no solution is found
     
@@ -110,11 +110,12 @@ def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
     
     visited = set()  # Set to keep track of visited states
-    stack = util.Queue()  # FIFO Queue to store the states to be explored
-    stack.push((problem.getStartState(), []))  # Push the start state and an empty list of actions
+    frontier = util.Queue()  # FIFO Queue to store the states to be explored
+    frontier.push((problem.getStartState(), []))  # Push the start state and an empty list of actions
 
-    while not stack.isEmpty():
-        state, actions = stack.pop()
+    while not frontier.isEmpty():
+        state, actions = frontier.pop()
+        print("State:", state, "Actions:", actions)
 
         if problem.isGoalState(state):
             print("Goal state found", state, actions)
@@ -125,14 +126,35 @@ def breadthFirstSearch(problem):
             successors = problem.getSuccessors(state)
             print("Successors:", successors)
             for successor, action, _ in successors:
-                stack.push((successor, actions + [action]))
+                frontier.push((successor, actions + [action]))
 
     return []  # Return an empty list if no solution is found
 
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
-    "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+
+    visited = set()  # Set to keep track of visited states
+    frontier = util.PriorityQueue()  # Priority Queue to store the states to be explored
+    frontier.push((problem.getStartState(), []), 0)  # Push the start state and an empty list of actions with priority 0
+
+    while not frontier.isEmpty():
+        state, actions = frontier.pop()
+
+        if problem.isGoalState(state):
+            print("Goal state found", state, actions)
+            return actions
+
+        if state not in visited:
+            visited.add(state)
+            successors = problem.getSuccessors(state)
+            print("Successors:", successors)
+            for successor, action, stepCost in successors:
+                new_actions = actions + [action]
+                new_cost = problem.getCostOfActions(new_actions)
+                frontier.push((successor, new_actions), new_cost)
+
+    return []  # Return an empty list if no solution is found
+
 
 def nullHeuristic(state, problem=None):
     """

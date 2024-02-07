@@ -283,6 +283,18 @@ class CornersProblem(search.SearchProblem):
         # Please add any code here which you would like to use
         # in initializing the problem
         "*** YOUR CODE HERE ***"
+        print('CornersProblem initialized')
+        print(self.walls)
+        print('Corners:', self.corners)
+        print('Starting Position:', self.startingPosition)
+        print('Expanded:', self._expanded)
+        print('')
+
+        # We have not visited any corners yet
+        if self.startingPosition in self.corners:
+            self.visited = tuple([self.startingPosition])
+        else:
+            self.visited = tuple()
 
 
     def getStartState(self):
@@ -291,16 +303,18 @@ class CornersProblem(search.SearchProblem):
         space)
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
-        return self.startingPosition
+        # The state is the position and the set of visited corners
+        state = (self.startingPosition, self.visited)
+        print('Start State:', state)
+        return state
 
     def isGoalState(self, state):
         """
         Returns whether this search state is a goal state of the problem.
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
-        return self.corners == state
+        # We are in the corner and we have visited all corners
+        return len(state[1]) == len(self.corners) and all(corner in state[1] for corner in self.corners)
 
     def getSuccessors(self, state):
         """
@@ -322,8 +336,21 @@ class CornersProblem(search.SearchProblem):
             #   nextx, nexty = int(x + dx), int(y + dy)
             #   hitsWall = self.walls[nextx][nexty]
 
-            "*** YOUR CODE HERE ***"
+            x, y = state[0]
+            dx, dy = Actions.directionToVector(action)
+            nextx, nexty = int(x + dx), int(y + dy)
+            hitsWall = self.walls[nextx][nexty]
+            if not hitsWall:
+                nextPosition = (nextx, nexty)
+                visited = set(self.visited)  # Convert tuple back to set for modification
+                if nextPosition in self.corners:
+                    visited.add(nextPosition)
+                visited = tuple(visited)  # Convert back to tuple for the state
 
+                nextState = (nextPosition, visited)
+                cost = 1
+                successors.append((nextState, action, cost))
+                
         self._expanded += 1 # DO NOT CHANGE
         return successors
 
